@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroTech Enterprise - Hub Global de Sustentabilidade</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #06090c;
+            --bg-surface: #0d1117;
+            --bg-card: #161b22;
+            --neon-green: #00ff66;
+            --cyber-blue: #00d2ff;
+            --corn-gold: #ffb703;
+            --alert-red: #ff3366;
+            --text-main: #f0f6fc;
+            --text-secondary: #8b949e;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* NAVBAR PREMIUM COM MENU CENTRALIZADO */
+        .navbar {
+            background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(13,17,23,0.9) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* MENU COMPLETAMENTE CENTRALIZADO */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--neon-green);
+            background: rgba(0, 255, 102, 0.1);
+            text-shadow: 0 0 8px rgba(0, 255, 102, 0.5);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-top {
+            background: transparent;
+            border: 1px solid var(--cyber-blue);
+            color: var(--cyber-blue);
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-top:hover {
+            background: var(--cyber-blue);
+            color: var(--bg-deep);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
+        /* CONTAINER PRINCIPAL */
+        .app-container {
+            max-width: 1600px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* CONTROLE DE BUSCA GLOBAL */
+        .search-wrapper {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-wrapper i { color: var(--text-secondary); font-size: 1.3rem; }
+        .search-wrapper input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        /* DASHBOARD METRIC GRID */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 14px;
+            position: relative;
+            border-left: 4px solid var(--text-secondary);
+        }
+        .m-green { border-left-color: var(--neon-green); }
+        .m-gold { border-left-color: var(--corn-gold); }
+        .m-blue { border-left-color: var(--cyber-blue); }
+        .m-red { border-left-color: var(--alert-red); }
+
+        .metric-card h4 {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .metric-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* MASTER STRUCTURE (3 COLUNAS PARA MÁXIMA FUNÇÃO) */
+        .master-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media(max-width: 1200px) {
+            .master-layout { grid-template-columns: 1fr; }
+            .nav-menu { display: none; } /* Mobile fallback simplificado */
+        }
+
+        .panel-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .panel-card h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.8rem;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* ELEMENTOS DE FORMULÁRIO */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .field-group { margin-bottom: 1.2rem; }
+        .field-group label {
+            display: block;
+            color: var(--text-secondary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .input-cyber {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .input-cyber:focus {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+        }
+
+        .btn-cyber {
+            width: 100%;
+            background: linear-gradient(90deg, #1f2937, #111827);
+            color: white;
+            border: 1px solid var(--neon-green);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .btn-cyber:hover {
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.3);
+            background: var(--neon-green);
+            color: var(--bg-deep);
+        }
+
+        /* ENGINE INTEGRADO DO CHAT GEMINI */
+        .gemini-container {
+            border: 1px solid rgba(0, 210, 255, 0.3);
+        }
+        .gemini-header-title { color: var(--cyber-blue) !important; }
+        .chat-screen {
+            height: 380px;
+            background: var(--bg-deep);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+        .bubble {
+            margin-bottom: 1rem;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            max-width: 85%;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+        .b-user {
+            background: var(--cyber-blue);
+            color: var(--bg-deep);
+            margin-left: auto;
+            font-weight: 700;
+        }
+        .b-gemini {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border-left: 4px solid var(--neon-green);
+        }
+
+        /* STATUS DE EVENTOS / TELEMETRIA */
+        .telemetry-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 1rem;
+            background: var(--bg-card);
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            border-right: 4px solid var(--border);
+        }
+
+        .search-highlight {
+            animation: glow-pulse 2s infinite;
+        }
+        @keyframes glow-pulse {
+            0% { border-color: var(--border); }
+            50% { border-color: var(--neon-green); box-shadow: 0 0 15px rgba(0,255,102,0.2); }
+            100% { border-color: var(--border); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fa-solid fa-microchip-asco"></i>
+                <span>AGRO<span>TECH</span></span>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#mod-propriedade" class="nav-link active">Propriedade</a></li>
+                    <li><a href="#mod-ph" class="nav-link">Análise de Solo</a></li>
+                    <li><a href="#mod-carbono" class="nav-link">Mercado de Carbono</a></li>
+                    <li><a href="#mod-gemini" class="nav-link">Central Gemini IA</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="btn-top" onclick="window.print()"><i class="fa-solid fa-print"></i> Relatório Geral</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-container">
+
+        <div class="search-wrapper">
+            <i class="fa-solid fa-terminal"></i>
+            <input type="text" id="global-search" placeholder="Execute uma busca no terminal integrado (ex: pH, Milho, Créditos, Carbono)..." onkeyup="sistemaBuscaRealtime()">
+        </div>
+
+        <section class="metric-grid">
+            <div class="metric-card m-green" id="card-hectares">
+                <h4>Área de Cobertura</h4>
+                <div class="value" id="lbl-hectares">600 ha</div>
+            </div>
+            <div class="metric-card m-gold" id="card-sacas">
+                <h4>Safra Projetada (Milho)</h4>
+                <div class="value" id="lbl-sacas">90.000 sc</div>
+            </div>
+            <div class="metric-card m-blue" id="card-ph">
+                <h4>Diagnóstico de Solo</h4>
+                <div class="value" id="lbl-ph">5.5 pH</div>
+            </div>
+            <div class="metric-card m-purple" id="card-carbono-t">
+                <h4>Retenção Certificada</h4>
+                <div class="value" id="lbl-carbono">1.440 t</div>
+            </div>
+        </section>
+
+        <div class="master-layout">
+            
+            <div>
+                <section class="panel-card" id="mod-propriedade">
+                    <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80" alt="Lavoura" class="banner-img">
+                    <h2><i class="fa-solid fa-sliders" style="color: var(--neon-green);"></i> Parametrização Operacional da Fazenda</h2>
+                    
+                    <div class="form-row">
+                        <div class="field-group">
+                            <label>Hectares Produtivos</label>
+                            <input type="number" id="txt-hectares" class="input-cyber" value="600" oninput="recalcularTudo()">
+                        </div>
+                        <div class="field-group">
+                            <label>Produtividade Alvo (Sacas/ha)</label>
+                            <input type="number" id="txt-sacas-ha" class="input-cyber" value="150" oninput="recalcularTudo()">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field-group">
+                            <label>Sequestro Padrão (t CO₂/ha)</label>
+                            <input type="number" id="txt-carbono-ha" class="input-cyber" value="2.4" step="0.1" oninput="recalcularTudo()">
+                        </div>
+                        <div class="field-group">
+                            <label>Preço por tonelada de Carbono ($)</label>
+                            <input type="number" id="txt-preco-carbono" class="input-cyber" value="15" oninput="recalcularTudo()">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel-card" id="mod-ph">
+                    <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1200&q=80" alt="Análise Laboratorial" class="banner-img">
+                    <h2><i class="fa-solid fa-flask-vial" style="color: var(--corn-gold);"></i> Monitoramento Químico & Recomendação de Calagem</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Determine a necessidade exata de calcário para otimizar o solo para a cultura do milho.</p>
+                    
+                    <form onsubmit="executarCalculoCalagem(event)">
+                        <div class="form-row">
+                            <div class="field-group">
+                                <label>pH Atual Coletado</label>
+                                <input type="number" id="txt-ph-valor" class="input-cyber" value="5.2" step="0.1">
+                            </div>
+                            <div class="field-group">
+                                <label>Saturação Atual (V1%)</label>
+                                <input type="number" id="txt-v1" class="input-cyber" value="45">
+                            </div>
+                            <div class="field-group">
+                                <label>Alvo Recomendado (V2%)</label>
+                                <input type="number" id="txt-v2" class="input-cyber" value="70" readonly>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-cyber"><i class="fa-solid fa-calculator"></i> Rodar Diagnóstico Computacional</button>
+                    </form>
+                </section>
+
+                <section class="panel-card" id="mod-carbono">
+                    <h2><i class="fa-solid fa-hand-holding-dollar" style="color: var(--neon-green);"></i> Balanço Financeiro de Ativos Ambientais</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Cálculo estimado do faturamento obtido através da preservação ambiental e práticas sustentáveis.</p>
+                    <div class="form-row" style="background: var(--bg-card); padding: 1.5rem; border-radius: 10px; border: 1px solid var(--border);">
+                        <div>
+                            <span style="color: var(--text-secondary); display:block; font-size:0.9rem;">Receita de Carbono Estimada</span>
+                            <span id="lbl-faturamento-carbono" style="font-size: 2rem; font-weight:700; color: var(--neon-green); font-family: 'Orbitron';">$ 21.600,00</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div>
+                <section class="panel-card gemini-container" id="mod-gemini">
+                    <h2 class="gemini-header-title"><i class="fa-solid fa-brain"></i> Engine Inteligente Gemini 1.5 PRO</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.2rem;">Assistente operacional conectado ao seu banco de dados local.</p>
+                    
+                    <div class="chat-screen" id="chat-viewport">
+                        <div class="bubble b-gemini">
+                            Conexão segura estabelecida. Eu sou o **Gemini**. Consigo ler os parâmetros de hectares, toneladas de CO₂ e pH configurados nas suas tabelas ao lado. O que deseja analisar ou corrigir no manejo do seu milho?
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="chat-prompt" class="input-cyber" placeholder="Digite uma instrução (ex: Meu pH está crítico? Quanto vou lucrar?)..." onkeypress="capturarEnterChat(event)">
+                        <button class="btn-cyber" style="width: auto; background: var(--cyber-blue); border: none; color: black;" onclick="processarRespostaGemini()"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </section>
+
+                <section class="panel-card" id="mod-telemetria">
+                    <h2><i class="fa-solid fa-satellite-dish" style="color: var(--cyber-blue);"></i> Painel de Monitoramento Remoto</h2>
+                    <div id="logs-area">
+                        <div class="telemetry-row" style="border-right-color: var(--neon-green);">
+                            <i class="fa-solid fa-shield-cat" style="color: var(--neon-green);"></i>
+                            <div>
+                                <h5>Mapeamento IoT Ativo</h5>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Sensores de umidade transmitindo sem perdas.</p>
+                            </div>
+                        </div>
+                        <div class="telemetry-row" id="status-alerta-dinamico" style="border-right-color: var(--corn-gold);">
+                            <i class="fa-solid fa-triangle-exclamation" style="color: var(--corn-gold);"></i>
+                            <div>
+                                <h5>Status Químico</h5>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">Aguardando envio do teste de calagem profunda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // 1. RECALCULO EM TEMPO REAL DE HECTARES, PRODUÇÃO E CRÉDITO
+        function recalcularTudo() {
+            const hectares = parseFloat(document.getElementById('txt-hectares').value) || 0;
+            const sacasPorHa = parseFloat(document.getElementById('txt-sacas-ha').value) || 0;
+            const carbonHa = parseFloat(document.getElementById('txt-carbono-ha').value) || 0;
+            const precoCarbono = parseFloat(document.getElementById('txt-preco-carbono').value) || 0;
+
+            const totalSacas = hectares * sacasPorHa;
+            const totalCarbono = hectares * carbonHa;
+            const totalFaturamento = totalCarbono * precoCarbono;
+
+            document.getElementById('lbl-hectares').innerText = `${hectares.toLocaleString('pt-BR')} ha`;
+            document.getElementById('lbl-sacas').innerText = `${totalSacas.toLocaleString('pt-BR')} sc`;
+            document.getElementById('lbl-carbono').innerText = `${totalCarbono.toLocaleString('pt-BR')} t`;
+            document.getElementById('lbl-faturamento-carbono').innerText = `$ ${totalFaturamento.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        }
+
+        // 2. LABORATÓRIO DE PH E CÁLCULO DE CORREÇÃO DE SOLO
+        function executarCalculoCalagem(event) {
+            event.preventDefault();
+            const ph = parseFloat(document.getElementById('txt-ph-valor').value) || 0;
+            const v1 = parseFloat(document.getElementById('txt-v1').value) || 0;
+            const v2 = parseFloat(document.getElementById('txt-v2').value) || 0;
+            const hectares = parseFloat(document.getElementById('txt-hectares').value) || 0;
+
+            document.getElementById('lbl-ph').innerText = `${ph.toFixed(1)} pH`;
+            const statusBox = document.getElementById('status-alerta-dinamico');
+
+            // Fórmula agronômica de calagem simplificada: NC (t/ha) = (V2 - V1) * 1 (Fator Solo padrão)
+            let necessidadeToneladaHa = (v2 - v1) * 0.08; 
+            if(necessidadeToneladaHa < 0) necessidadeToneladaHa = 0;
+            const totalGeralNecessario = necessidadeToneladaHa * hectares;
+
+            if(ph < 5.5) {
+                statusBox.style.borderRightColor = "var(--alert-red)";
+                statusBox.innerHTML = `
+                    <i class="fa-solid fa-circle-radiation" style="color: var(--alert-red);"></i>
+                    <div>
+                        <h5 style="color: var(--alert-red);">Solo Ácido (Grave)</h5>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">Necessário aplicar <strong>${necessidadeToneladaHa.toFixed(2)} t/ha</strong>. Total da lavoura: <strong>${totalGeralNecessario.toLocaleString('pt-BR')} t</strong> de Calcário.</p>
+                    </div>`;
+            } else {
+                statusBox.style.borderRightColor = "var(--neon-green)";
+                statusBox.innerHTML = `
+                    <i class="fa-solid fa-square-check" style="color: var(--neon-green);"></i>
+                    <div>
+                        <h5 style="color: var(--neon-green);">Homeostase Atingida</h5>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">O pH do solo está saudável para o plantio e desenvolvimento do milho.</p>
+                    </div>`;
+            }
+        }
+
+        // 3. CENTRAL DE RESPOSTA COGNITIVA DA IA GEMINI (TOTALMENTE INTERATIVA)
+        function processarRespostaGemini() {
+            const inputElement = document.getElementById('chat-prompt');
+            const chatScreen = document.getElementById('chat-viewport');
+            const mensagemUsuario = inputElement.value.trim();
+
+            if (!mensagemUsuario) return;
+
+            // Injetar mensagem do usuário
+            chatScreen.innerHTML += `<div class="bubble b-user">${mensagemUsuario}</div>`;
+            inputElement.value = '';
+            chatScreen.scrollTop = chatScreen.scrollHeight;
+
+            // Motor de Contexto Integrado do Gemini (Lê dados da tela em tempo real)
+            setTimeout(() => {
+                const hectaresAtuais = document.getElementById('txt-hectares').value;
+                const phAtual = document.getElementById('txt-ph-valor').value;
+                const totalSacas = parseFloat(hectaresAtuais) * parseFloat(document.getElementById('txt-sacas-ha').value);
+                const receitaCarbono = document.getElementById('lbl-faturamento-carbono').innerText;
+
+                let respostaGemini = "Compreendo a sua solicitação. Analisando os dados consolidados do seu ecossistema, recomendo adotar adubação verde associada ao manejo integrado de pragas para evitar a degradação do solo.";
+
+                const promptMinusculo = mensagemUsuario.toLowerCase();
+
+                if (promptMinusculo.includes('ph') || promptMinusculo.includes('solo') || promptMinusculo.includes('ácido')) {
+                    respostaGemini = `Seu sistema aponta um pH atual de **${phAtual}**. Na cultura do milho, um pH abaixo de 5.5 restringe a absorção de nutrientes essenciais como Fósforo e Potássio. Execute a aplicação do calcário recomendada no painel de controle de calagem para restabelecer a neutralidade.`;
+                } else if (promptMinusculo.includes('lucrar') || promptMinusculo.includes('lucro') || promptMinusculo.includes('dinheiro') || promptMinusculo.includes('faturamento') || promptMinusculo.includes('carbono')) {
+                    respostaGemini = `Com base nas suas configurações de preservação ambiental, a receita projetada no mercado internacional com créditos de carbono para os seus **${hectaresAtuais} hectares** é de **${receitaCarbono}**. Práticas de plantio direto aumentam esses ativos anualmente.`;
+                } else if (promptMinusculo.includes('milho') || promptMinusculo.includes('safra') || promptMinusculo.includes('sacas')) {
+                    respostaGemini = `Sua projeção de colheita atual é de **${totalSacas.toLocaleString('pt-BR')} sacas** de milho. Para manter esse rendimento em alta de forma sustentável, recomendo monitorar a janela de plantio da safrinha e associar inoculantes biológicos para poupar fertilizantes nitrogenados químicos.`;
+                }
+
+                chatScreen.innerHTML += `<div class="bubble b-gemini"><strong>Gemini:</strong> ${respostaGemini}</div>`;
+                chatScreen.scrollTop = chatScreen.scrollHeight;
+            }, 600);
+        }
+
+        function capturarEnterChat(event) {
+            if (event.key === 'Enter') processarRespostaGemini();
+        }
+
+        // 4. MOTOR DE BUSCA GLOBAL POR TERMINAL INTEGRADO
+        function sistemaBuscaRealtime() {
+            const termo = document.getElementById('global-search').value.toLowerCase();
+            const blocos = document.querySelectorAll('.panel-card, .metric-card');
+
+            if (termo === "") {
+                blocos.forEach(b => {
+                    b.style.opacity = "1";
+                    b.classList.remove('search-highlight');
+                });
+                return;
+            }
+
+            blocos.forEach(b => {
+                const conteudoTexto = b.innerText.toLowerCase();
+                if (conteudoTexto.includes(termo)) {
+                    b.style.opacity = "1";
+                    b.classList.add('search-highlight');
+                } else {
+                    b.style.opacity = "0.15";
+                    b.classList.remove('search-highlight');
+                }
+            });
+        }
+
+        // Sincronizar cliques nas abas de menu centralizadas com rolagem suave e ativação visual
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Inicializar aplicação
+        window.onload = function() {
+            recalcularTudo();
+        };
+    </script>
+</body>
+</html>
